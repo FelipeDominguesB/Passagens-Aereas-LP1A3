@@ -7,15 +7,20 @@ public class Voo {
 	
 	private Aviao aeronave;
 	private int nro;
+	
+	private String saidaEm;
+	private String chegadaEm;
+	
 	private String data;
 	private String hora;
 	
-	public Voo(Aviao aeronave, String data, String hora) {
+	public Voo(Aviao aeronave, String saidaEm, String chegadaEm, String data, String hora) {
 		this.aeronave = aeronave;
 		this.nro = nroVoo;
 		this.data = data;
 		this.hora = hora;
-		
+		this.saidaEm = saidaEm;
+		this.chegadaEm = chegadaEm;
 		nroVoo++;
 	}
 	
@@ -50,6 +55,26 @@ public class Voo {
 		return this.aeronave;
 	}
 	
+	
+	public String getSaidaEm() {
+		return saidaEm;
+	}
+
+
+	public void setSaidaEm(String saidaEm) {
+		this.saidaEm = saidaEm;
+	}
+
+
+	public String getChegadaEm() {
+		return chegadaEm;
+	}
+
+
+	public void setChegadaEm(String chegadaEm) {
+		this.chegadaEm = chegadaEm;
+	}
+
 	
 	
 
