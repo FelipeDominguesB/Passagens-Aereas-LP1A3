@@ -20,5 +20,37 @@ public class Voo {
 	}
 	
 	
+	public String getData() {
+		return data;
+	}
+
+
+	public void setData(String data) {
+		this.data = data;
+	}
+
+
+	public String getHora() {
+		return hora;
+	}
+
+
+	public void setHora(String hora) {
+		this.hora = hora;
+	}
+
+
+	public int getNro() {
+		return nro;
+	}	
+	
+	
+	public Aviao getAeronave()
+	{
+		return this.aeronave;
+	}
+	
+	
+	
 
 }
