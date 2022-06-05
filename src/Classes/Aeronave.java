@@ -8,6 +8,7 @@ public class Aeronave {
 		this.modelo = modelo;
 	}
 	
+	
 	public String getModelo() {
 		return modelo;
 	}

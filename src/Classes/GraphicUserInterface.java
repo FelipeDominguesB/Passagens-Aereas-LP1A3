@@ -6,6 +6,7 @@ import Exceptions.*;
 import javax.swing.*;
 import java.text.*;
 
+
 public class GraphicUserInterface extends JFrame{
 	
 
@@ -19,7 +20,7 @@ public class GraphicUserInterface extends JFrame{
 	
 	private void ConfigureFrame()
 	{
-		System.out.println("Cheguei aqui");
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(300,300);
 		
@@ -159,6 +160,7 @@ public class GraphicUserInterface extends JFrame{
 		JButton btnOpcao2 = new JButton("2 - Consultar lugares vazios");
 		JButton btnOpcao3 = new JButton("3 - Consultar reservas realizadas");
 		JButton btnOpcao4 = new JButton("4 - Voltar");
+		boolean temVoos = Program.voos.size() > 0;
 		
 		
 		add(btnOpcao1);
@@ -174,26 +176,37 @@ public class GraphicUserInterface extends JFrame{
 		
 		btnOpcao1.addActionListener((event) -> {
 			
-			
-			remove(btnOpcao1);
-			remove(btnOpcao2);
-			remove(btnOpcao3);
-			remove(btnOpcao4);
-			
-			MakeReservation();
+			if(temVoos)
+			{
+				remove(btnOpcao1);
+				remove(btnOpcao2);
+				remove(btnOpcao3);
+				remove(btnOpcao4);
+				
+				MakeReservation();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(this, "Não é possível fazer reservas cadastrar um voo sem que haja o cadastro de aviões no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
+			}
 				
 			
 		});
 		
 		btnOpcao2.addActionListener((event) -> {
 			
-			
-			remove(btnOpcao1);
-			remove(btnOpcao2);
-			remove(btnOpcao3);
-			remove(btnOpcao4);
-			
-			seeReservations(false);
+			if(temVoos)
+			{
+				remove(btnOpcao1);
+				remove(btnOpcao2);
+				remove(btnOpcao3);
+				remove(btnOpcao4);
+				
+				seeReservations(false);
+			}
+			else {
+				
+			}
 				
 			
 		});
@@ -201,12 +214,18 @@ public class GraphicUserInterface extends JFrame{
 		btnOpcao3.addActionListener((event) -> {
 			
 			
-			remove(btnOpcao1);
-			remove(btnOpcao2);
-			remove(btnOpcao3);
-			remove(btnOpcao4);
-			
-			seeReservations(true);
+			if(temVoos)
+			{
+				remove(btnOpcao1);
+				remove(btnOpcao2);
+				remove(btnOpcao3);
+				remove(btnOpcao4);
+				
+				seeReservations(true);
+			}
+			else {
+				
+			}
 				
 			
 		});
@@ -227,7 +246,9 @@ public class GraphicUserInterface extends JFrame{
 		});
 		
 
-		
+		setSize(300, 300);
+		setLayout(null);
+		setVisible(true);
 		
 		
 	}
@@ -240,34 +261,109 @@ public class GraphicUserInterface extends JFrame{
 	
 		JLabel lblNome = new JLabel("Nome do viajante: ");
 		JLabel lblCpf = new JLabel("CPF do viajante: ");
+		
+		JLabel lblVoo = new JLabel("Voo: ");
+		
 		JLabel lblFileira = new JLabel("Fileira: ");
 		JLabel lblAssento = new JLabel("Assento: ");
 		
 		JTextField txtNome = new JTextField();
 		JTextField txtCpf = new JTextField();
-		JTextField txtFileira = new JTextField();
-		JTextField txtAssento = new JTextField();
-		
-		JButton btnEnviar = new JButton("Fazer reserva");
+		JButton btnCriar = new JButton("Criar");
 		JButton btnVoltar = new JButton("Voltar");
+		
+		
+		String arrayVoos[] = Helpers.listaVoos();
+		String arrayFileiras[] = Helpers.createRowsArray(Program.voos.get(0));
+		String arrayAssentos[] = Helpers.createColumnsArray(Program.voos.get(0));
+		
+		
+		
+		JComboBox<String> cbxVoos = new JComboBox<>(arrayVoos);
+		JComboBox<String> cbxFileira = new JComboBox<>(arrayFileiras);
+		JComboBox<String> cbxAssento = new JComboBox<>(arrayAssentos);
+		
+		
 		
 		add(lblNome);
 		add(txtNome);
 		add(lblCpf);
 		add(txtCpf);
 		
+		add(lblVoo);
+		add(cbxVoos);
 		
-		lblNome.setBounds(10,10,260,30);
-		txtNome.setBounds(10,35,260,30);
+		add(lblFileira);
+		add(lblAssento);
+		add(cbxFileira);
+		add(cbxAssento);
 		
-		lblCpf.setBounds(10,80,260,30);
-		txtCpf.setBounds(10,105,260,30);
+		add(btnCriar);
+		add(btnVoltar);
+		
+		lblNome.setBounds(10,10,360,30);
+		txtNome.setBounds(10,35, 360,30);
+		
+		lblCpf.setBounds(10,70,360,30);
+		txtCpf.setBounds(10,95,360,30);
+		
+		lblVoo.setBounds(10,130,360,30);
+		cbxVoos.setBounds(10, 155, 360, 30);
+		
+		lblFileira.setBounds(10,190,135,30);
+		lblAssento.setBounds(235,190,135,30);
+		
+		cbxFileira.setBounds(10, 215, 135, 30);
+		cbxAssento.setBounds(235, 215, 135, 30);
+		
+		btnCriar.setBounds(10,260,135,30);
+		btnVoltar.setBounds(235,260,135,30);
 		
 		
 		
-		btnVoltar.setBounds(10,200,260,30);
+		cbxVoos.addActionListener((event) ->{
+			
+			
+			int nroVoo = Integer.parseInt(cbxVoos.getSelectedItem().toString().split(" ")[0]);
+			
+			Voo voo = Helpers.getVooByNro(nroVoo);
+			
+			
+			String newArrayFileiras[] = Helpers.createRowsArray(voo);
+			String newArrayAssentos[] = Helpers.createColumnsArray(voo);
+			DefaultComboBoxModel<String> listaFileiras = new DefaultComboBoxModel<>(newArrayFileiras);
+			DefaultComboBoxModel<String> listaAssentos= new DefaultComboBoxModel<>(newArrayAssentos);
+			cbxFileira.setModel( listaFileiras );
+			cbxAssento.setModel( listaAssentos );
+			
+		});
+		btnVoltar.addActionListener((event) -> {
+			
+			
+			
+			remove(lblNome);
+			remove(txtNome);
+			remove(lblCpf);
+			remove(txtCpf);
+			
+			remove(lblVoo);
+			remove(cbxVoos);
+			
+			remove(lblFileira);
+			remove(lblAssento);
+			remove(cbxFileira);
+			remove(cbxAssento);
+			
+			remove(btnCriar);
+			remove(btnVoltar);
+			
+			
+			
+			CreatePassageReservationPage();
+		});
 		
-		setSize(300, 400);
+		
+		setSize(400, 340);
 		setLayout(null);
 		setVisible(true);
 			
@@ -279,14 +375,6 @@ public class GraphicUserInterface extends JFrame{
 	{
 		revalidate();
 		repaint();
-		if(Program.voos.size() >0)
-		{
-			
-		}
-		else {
-			JOptionPane.showMessageDialog(this, "Não há voos cadastrados!");
-			CreatePassageReservationPage();
-		}
 	}
 	
 	public void createPlane()
@@ -379,14 +467,6 @@ public class GraphicUserInterface extends JFrame{
 		
 		btnVoltar.addActionListener((event) -> {
 			
-			txtModelo.setVisible(false);
-			txtFileiras.setVisible(false);
-			txtAssentos.setVisible(false);
-			lblModelo.setVisible(false);
-			lblFileiras.setVisible(false);
-			lblAssentos.setVisible(false);
-			btnCriar.setVisible(false);
-			btnVoltar.setVisible(false);
 			
 			remove(txtModelo);
 			remove(txtFileiras);
@@ -434,7 +514,7 @@ public class GraphicUserInterface extends JFrame{
 		
 		
 		
-		JComboBox cbxAvioes = new JComboBox(Helpers.listaAvioes());
+		JComboBox<String> cbxAvioes = new JComboBox<>(Helpers.listaAvioes());
 		
 
 		JButton btnCriar = new JButton("Criar");

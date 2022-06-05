@@ -17,6 +17,9 @@ public class Helpers {
 		
 	}
 	
+	
+	
+	
 	public static String[] listaVoos()
 	{
 		String vooArray[] = new String[Program.voos.size()];
@@ -24,19 +27,57 @@ public class Helpers {
 		int i = 0;
 		for(Voo voo : Program.voos)
 		{
-			System.out.println("");
-			System.out.println("Nº: " + voo.getNro());
-			System.out.println("Data: " + voo.getData());
-			System.out.println("Hora: " + voo.getHora());
-			System.out.println("Saida em: " + voo.getSaidaEm());
-			System.out.println("Chegada em: " + voo.getChegadaEm());
-			System.out.println("Avião: " + voo.getAeronave().getModelo());
-			System.out.println("");
-			
+			vooArray[i] = voo.getNro() + " - " + voo.getSaidaEm() + " - " + voo.getChegadaEm() + " (" + voo.getData() + " " + voo.getHora() + ")";
 			i++;
 		}
 		
 		return vooArray;
 		
+	}
+	
+	
+	public static Voo getVooByNro(int nro)
+	{
+		Voo voo = null;
+		
+		for(Voo voos : Program.voos)
+		{
+			if(voos.getNro() == nro)
+			{
+				voo = voos;
+			}
+		}
+		
+		return voo;
+	}
+	
+	public static String[] createRowsArray(Voo voo)
+	{
+		int nroFileiras = voo.getAeronave().getFileiras();
+		String Fileiras[] = new String[nroFileiras];
+		int i = 0;
+		
+		for(i =0; i < nroFileiras; i++)
+		{
+			Fileiras[i] = Integer.toString(i+1);
+		}
+		
+		
+		return Fileiras;
+	}
+	
+	public static String[] createColumnsArray(Voo voo)
+	{
+		int nroAssentos = voo.getAeronave().getAssentosPorFileira();
+		String Assentos[] = new String[nroAssentos];
+		int i = 0;
+		
+		for(i =0; i < nroAssentos; i++)
+		{
+			Assentos[i] = Integer.toString(i+1);
+		}
+		
+		
+		return Assentos;
 	}
 }

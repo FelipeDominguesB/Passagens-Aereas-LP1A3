@@ -3,9 +3,10 @@ package Classes;
 public class Voo {
 	
 	
-	private static int nroVoo = 0;
+	private static int nroVoo = 1;
 	
 	private Aviao aeronave;
+	
 	private int nro;
 	
 	private String saidaEm;
