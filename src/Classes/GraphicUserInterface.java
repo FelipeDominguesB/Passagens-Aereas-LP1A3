@@ -32,7 +32,7 @@ public class GraphicUserInterface extends JFrame{
 	{
 		revalidate();
 		repaint();
-		setTitle("Página principal");
+		setTitle("Pagina principal");
 		JButton btnOpcao1 = new JButton("1 - Parametros do sistema");
 		JButton btnOpcao2 = new JButton("2 - Reserva de passagens");
 		JButton btnOpcao3 = new JButton("3 - Sair");
@@ -88,7 +88,7 @@ public class GraphicUserInterface extends JFrame{
 		revalidate();
 		repaint();
 		
-		setTitle("Parâmetros do sistema");
+		setTitle("Parametros do sistema");
 		JButton btnOpcao1 = new JButton("1 - Cadastrar aeronave");
 		JButton btnOpcao2 = new JButton("2 - Cadastrar Voo");
 		JButton btnOpcao3 = new JButton("3 - Voltar");
@@ -122,7 +122,7 @@ public class GraphicUserInterface extends JFrame{
 				createFlight();
 			}
 			else {
-				JOptionPane.showMessageDialog(this, "Não é possível cadastrar um voo sem que haja o cadastro de aviões no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Nao e possivel cadastrar um voo sem que haja o cadastro de avioes no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		});
@@ -189,7 +189,7 @@ public class GraphicUserInterface extends JFrame{
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(this, "Não é possível fazer reservas de passagem que haja o cadastro de voos no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Nao e possivel fazer reservas de passagem que haja o cadastro de voos no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
 			}
 				
 			
@@ -207,7 +207,7 @@ public class GraphicUserInterface extends JFrame{
 				seeReservations(true);
 			}
 			else {
-				JOptionPane.showMessageDialog(this, "Não é possível ver assentos disponiveis sem que haja o cadastro de voos no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Nao e possivel ver assentos disponiveis sem que haja o cadastro de voos no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
 			}
 				
 			
@@ -226,7 +226,7 @@ public class GraphicUserInterface extends JFrame{
 				seeReservations(false);
 			}
 			else {
-				JOptionPane.showMessageDialog(this, "Não é possível ver reservas de passagem sem que haja o cadastro de voos no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Nao e possivel ver reservas de passagem sem que haja o cadastro de voos no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
 			}
 				
 			
@@ -383,7 +383,7 @@ public class GraphicUserInterface extends JFrame{
 					cbxAssento.setSelectedIndex(0);
 				}
 				else {
-					JOptionPane.showMessageDialog(this, "Erro, lugar já ocupado, favor selecionar outra posição!",  "Erro!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Erro, lugar ja ocupado, favor selecionar outra posicao!",  "Erro!", JOptionPane.ERROR_MESSAGE);
 				}
 				
 				
@@ -501,11 +501,11 @@ public class GraphicUserInterface extends JFrame{
 	{
 		revalidate();
 		repaint();
-		setTitle("Cadastrar avião");
+		setTitle("Cadastrar aviao");
 		
-		JLabel lblModelo = new JLabel("Modelo do avião: ");
-		JLabel lblFileiras = new JLabel("Número de fileiras: ");
-		JLabel lblAssentos = new JLabel("Número de assentos por fileira: ");
+		JLabel lblModelo = new JLabel("Modelo do aviao: ");
+		JLabel lblFileiras = new JLabel("Numero de fileiras: ");
+		JLabel lblAssentos = new JLabel("Numero de assentos por fileira: ");
 		
 		
 		JTextField txtModelo = new JTextField();
@@ -570,7 +570,7 @@ public class GraphicUserInterface extends JFrame{
 			}
 			catch(NumberFormatException e)
 			{
-				JOptionPane.showMessageDialog(this, "O valor de fileiras e assentos por fileiras devem estar preenchidos por valores númericos",  "Erro!", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O valor de fileiras e assentos por fileiras devem estar preenchidos por valores numericos",  "Erro!", JOptionPane.ERROR_MESSAGE);
 			}
 			catch(IncompleteValuesException e)
 			{
@@ -614,13 +614,13 @@ public class GraphicUserInterface extends JFrame{
 		setTitle("Cadastrar voo");
 		
 		
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
 		DateFormat tf = new SimpleDateFormat("HH:mm");
 		
 		
-		JLabel lblSaida = new JLabel("Local de saída: ");
+		JLabel lblSaida = new JLabel("Local de saida: ");
 		JLabel lblChegada = new JLabel("Local de chegada: ");
-		JLabel lblAviao = new JLabel("Selecione o avião: ");
+		JLabel lblAviao = new JLabel("Selecione o aviao: ");
 		
 		JLabel lblData = new JLabel("Data: ");
 		JLabel lblHora = new JLabel("Hora: ");
