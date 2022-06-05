@@ -337,6 +337,68 @@ public class GraphicUserInterface extends JFrame{
 			cbxAssento.setModel( listaAssentos );
 			
 		});
+		
+		btnCriar.addActionListener((event) -> {
+			
+			try {
+				
+				boolean reservou;
+				String nome = txtNome.getText();
+				String cpf = txtCpf.getText();
+				String vooSelecionado = cbxVoos.getSelectedItem().toString().split(" ")[0];
+				String fileira = cbxFileira.getSelectedItem().toString();
+				String assento = cbxAssento.getSelectedItem().toString();
+				
+				if(nome.isEmpty() || cpf.isEmpty() || vooSelecionado.isEmpty() || assento.isEmpty() || fileira.isEmpty())
+				{
+					throw new IncompleteValuesException("Todos os valores devem estar preenchidos");
+				}
+				
+				Passageiro passageiro = new Passageiro(nome, cpf);
+				
+				int nroVoo = Integer.parseInt(vooSelecionado);
+				int nroFileira = Integer.parseInt(fileira);
+				int nroAssento = Integer.parseInt(assento);
+				
+				
+				
+				Voo voo = Helpers.getVooByNro(nroVoo);
+				
+				if(voo == null) throw new Exception();
+				
+				reservou = voo.getAeronave().setPassageiro(passageiro, nroFileira, nroAssento);
+				
+				if(reservou)
+				{
+					JOptionPane.showMessageDialog(this, "Cadastrado com sucesso");
+					
+					
+					txtNome.setText("");
+					txtCpf.setText("");
+					txtCpf.setText("");
+					cbxVoos.setSelectedIndex(0);
+					cbxFileira.setSelectedIndex(0);
+					cbxAssento.setSelectedIndex(0);
+				}
+				else {
+					JOptionPane.showMessageDialog(this, "Erro, lugar já ocupado, favor selecionar outra posição!",  "Erro!", JOptionPane.ERROR_MESSAGE);
+				}
+				
+				
+				
+			}
+			catch(IncompleteValuesException e)
+			{
+				JOptionPane.showMessageDialog(this, e.getMessage(),  "Erro!", JOptionPane.ERROR_MESSAGE);
+			}
+			catch(Exception e)
+			{
+				JOptionPane.showMessageDialog(this, "Erro inesperado, contatar administrador do sistema!",  "Erro!", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			
+		});
+
 		btnVoltar.addActionListener((event) -> {
 			
 			
@@ -583,7 +645,8 @@ public class GraphicUserInterface extends JFrame{
 				int aviaoIndex = Integer.parseInt(modelo.split(" ")[0]);
 				
 				Aviao aviao = Program.avioes.get(aviaoIndex - 1); 
-				Voo novoVoo = new Voo(aviao, saida, chegada, data, hora);
+				Aviao newAviao = new Aviao(aviao.getModelo(), aviao.getFileiras(), aviao.getAssentosPorFileira());
+				Voo novoVoo = new Voo(newAviao, saida, chegada, data, hora);
 				
 				
 				Program.voos.add(novoVoo);

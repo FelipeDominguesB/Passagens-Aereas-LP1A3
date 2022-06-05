@@ -14,15 +14,22 @@ public class Aviao extends Aeronave{
 	}
 	
 	public boolean verificaLugarOcupado(int fileira, int assento) {
-		return lugares[fileira][assento] == null;
+		return lugares[fileira-1][assento-1] != null;
 	}
 
 	public Passageiro getPassageiro(int fileira, int assento) {
-		return lugares[fileira][assento];
+		return lugares[fileira-1][assento-1];
 	}
 	
-	public void setPassageiro(int fileira, int assento, Passageiro pessoa) {
-		this.lugares[fileira][assento] = pessoa;
+	public boolean setPassageiro(Passageiro pessoa, int fileira, int assento) {
+		
+		if(verificaLugarOcupado(fileira, assento))
+		{
+			return false;
+		}
+		this.lugares[fileira-1][assento-1] = pessoa;
+		
+		return true;
 	}
 	
 	public int getFileiras()
