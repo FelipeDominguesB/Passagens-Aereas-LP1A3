@@ -11,7 +11,7 @@ public class Passageiro {
 	}
 	
 	
-	public String getNome(String nome) {
+	public String getNome() {
 		return this.nome;
 	}
 		

@@ -4,6 +4,8 @@ import Exceptions.*;
 
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.text.*;
 
 
@@ -187,7 +189,7 @@ public class GraphicUserInterface extends JFrame{
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(this, "Não é possível fazer reservas cadastrar um voo sem que haja o cadastro de aviões no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Não é possível fazer reservas de passagem que haja o cadastro de voos no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
 			}
 				
 			
@@ -202,10 +204,10 @@ public class GraphicUserInterface extends JFrame{
 				remove(btnOpcao3);
 				remove(btnOpcao4);
 				
-				seeReservations(false);
+				seeReservations(true);
 			}
 			else {
-				
+				JOptionPane.showMessageDialog(this, "Não é possível ver assentos disponiveis sem que haja o cadastro de voos no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
 			}
 				
 			
@@ -221,10 +223,10 @@ public class GraphicUserInterface extends JFrame{
 				remove(btnOpcao3);
 				remove(btnOpcao4);
 				
-				seeReservations(true);
+				seeReservations(false);
 			}
 			else {
-				
+				JOptionPane.showMessageDialog(this, "Não é possível ver reservas de passagem sem que haja o cadastro de voos no sistema",  "Erro!", JOptionPane.ERROR_MESSAGE);
 			}
 				
 			
@@ -433,10 +435,66 @@ public class GraphicUserInterface extends JFrame{
 	}
 	
 	
-	public void seeReservations(Boolean seeVacantSpots)
+	public void seeReservations(boolean seeVacantSpots)
 	{
 		revalidate();
 		repaint();
+		
+		JLabel lblVoo = new JLabel("Voo: ");
+		JLabel lblDisponibilidade = new JLabel("Assentos");
+		JComboBox<String> cbxVoos = new JComboBox<>(Helpers.listaVoos());
+		JButton btnVoltar = new JButton("Voltar");
+		
+		
+		String[] colunas = {"Fileira", "Assento", "Ocupado por"};
+		Object[][] dados = Helpers.getFlightSeats(Program.voos.get(0), seeVacantSpots);
+		
+		JTable tableVoos = new JTable(dados, colunas);
+		JScrollPane panel = new JScrollPane(tableVoos);
+		
+		lblVoo.setBounds(10,10,360,30);
+		cbxVoos.setBounds(10,35, 360,30);
+		lblDisponibilidade.setBounds(10, 65, 360, 30);
+		panel.setBounds(10, 95, 360, 150);
+		btnVoltar.setBounds(10,250,360,30);
+		
+		add(lblVoo);
+		add(lblDisponibilidade);
+		add(cbxVoos);
+		add(btnVoltar);
+		
+		add(panel);
+		
+		cbxVoos.addActionListener((event) ->{
+			
+			
+			int nroVoo = Integer.parseInt(cbxVoos.getSelectedItem().toString().split(" ")[0]);
+			
+			Voo voo = Helpers.getVooByNro(nroVoo);
+			
+			
+			Object[][] novosDados = Helpers.getFlightSeats(voo, seeVacantSpots);
+			DefaultTableModel tableModel = new DefaultTableModel(novosDados, colunas);
+			
+			tableVoos.setModel(tableModel);
+			
+			
+		});
+		btnVoltar.addActionListener((event) -> {
+			
+			remove(lblVoo);
+			remove(cbxVoos);
+			remove(btnVoltar);
+			remove(tableVoos);
+			remove(panel);
+			remove(lblDisponibilidade);
+			CreatePassageReservationPage();
+		});
+		
+		
+		setSize(400, 340);
+		setLayout(null);
+		setVisible(true);
 	}
 	
 	public void createPlane()
@@ -631,12 +689,7 @@ public class GraphicUserInterface extends JFrame{
 				String hora = txtHora.getText().trim();
 				String chegada = txtChegada.getText().trim();
 				String saida = txtSaida.getText().trim();
-				
-				System.out.println(modelo);
-				System.out.println(data);
-				System.out.println(hora);
-				System.out.println(chegada);
-				System.out.println(saida);
+
 				if(modelo.isEmpty() || data.isEmpty() || hora.isEmpty() || chegada.isEmpty() || saida.isEmpty())
 				{
 					throw new IncompleteValuesException("Todos os valores devem estar preenchidos");
@@ -657,9 +710,7 @@ public class GraphicUserInterface extends JFrame{
 				txtHora.setText("");
 				txtChegada.setText("");
 				txtSaida.setText("");
-				
-				
-				Helpers.listaVoos();
+
 				
 			}
 			catch(IncompleteValuesException e)

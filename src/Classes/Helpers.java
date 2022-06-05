@@ -80,4 +80,39 @@ public class Helpers {
 		
 		return Assentos;
 	}
+	
+	
+	
+	public static Object[][] getFlightSeats(Voo voo, boolean seeVacant)
+	{
+		
+		int nroFileiras = voo.getAeronave().getFileiras();
+		int nroAssentos = voo.getAeronave().getAssentosPorFileira();
+		Object[][] dados  = new Object[nroFileiras*nroAssentos][3];
+		int linha = 0;
+		for(int i = 1; i <= nroFileiras; i++)
+		{
+			for(int j = 1; j <= nroAssentos; j++)
+			{
+				
+				if(voo.getAeronave().verificaLugarOcupado(i, j) && !seeVacant)
+				{
+					dados[linha][0] = Integer.toString(i);
+					dados[linha][1] = Integer.toString(j);
+					dados[linha][2] = voo.getAeronave().getPassageiro(i, j).getNome();
+					linha++;
+				}
+				else if(!voo.getAeronave().verificaLugarOcupado(i, j) && seeVacant) {
+					dados[linha][0] = Integer.toString(i);
+					dados[linha][1] = Integer.toString(j);
+					dados[linha][2] = "Disponivel";
+					linha++;
+				}
+				
+				
+			}
+		}
+
+		return dados;
+	}
 }
