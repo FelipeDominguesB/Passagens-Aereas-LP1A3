@@ -12,7 +12,7 @@ public class Program {
 		
 		GraphicUserInterface Gui = new GraphicUserInterface();
 		
-		
+		Gui.Start();
 	}
 
 	

@@ -12,12 +12,11 @@ import java.text.*;
 public class GraphicUserInterface extends JFrame{
 	
 
-	public GraphicUserInterface()
+	
+	public void Start()
 	{
-		
 		ConfigureFrame();
 		CreateMainPage();
-		
 	}
 	
 	private void ConfigureFrame()
